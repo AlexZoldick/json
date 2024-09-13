@@ -575,14 +575,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!empty($atCampos)) {
                 $facturasAt = [];
                 foreach ($atCampos as $atFila) {
-                    $numAutorizacion = isset($atFila[1]) ? $atFila[1] : 'sin_autorizacion';
-                    if (!isset($facturasAt[$numAutorizacion])) {
-                        $facturasAt[$numAutorizacion] = [];
-                    }
-                    $facturasAt[$numAutorizacion][] = $atFila;
+                    $numFactura = isset($atFila[0]) ? str_replace('-', '', $atFila[0]) : 'sin_factura';
+                    $facturasAt[$numFactura][] = $atFila;
                 }
 
-                foreach ($facturasAt as $numAutorizacion => $otrosServiciosFacturas) {
+                // Generar archivos JSON para el archivo AT (otros servicios) agrupados por número de factura
+                foreach ($facturasAt as $numFactura => $otrosServiciosFacturas) {
                     $otrosServicios = [];
                     foreach ($otrosServiciosFacturas as $atIndex => $servicio) {
                         $otrosServicios[] = [
@@ -608,7 +606,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Crear el JSON con los datos agrupados de otrosServicios
                     $jsonData = [
                         "numDocumentoIdObligado" => isset($afCampos[0][3]) ? $afCampos[0][3] : null, // nit
-                        "numAutorizacion" => $numAutorizacion, // Número de autorización
+                        "numFactura" => $numFactura, // Número de factura
                         "tipoNota" => null,
                         "numNota" => null,
                         "usuarios" => [
@@ -634,8 +632,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Generar el archivo JSON
                     $json = json_encode($jsonData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-                    // Definir el nombre del archivo usando el número de autorización
-                    $nombreArchivo = $numFactura  . '_at.json';
+                    // Definir el nombre del archivo usando el número de la factura
+                    $nombreArchivo = $numFactura . '_at.json';
 
                     // Agregar el archivo JSON al ZIP
                     $zip->addFromString($nombreArchivo, $json);
