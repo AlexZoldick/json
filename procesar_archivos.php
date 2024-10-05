@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 "tipoDocumentoIdentificacion" => isset($usCampos[0][0]) ? $usCampos[0][0] : null,
                                 "numDocumentoIdentificacion" => isset($usCampos[0][1]) ? $usCampos[0][1] : null,
                                 "tipoUsuario" => "01", // tabla RIPSTipoUsuarioVersion2
-                                "fechaNacimiento" => isset($consultasFacturas[0][4]) ? $consultasFacturas[0][4] : null, // columna 5 ac
+                                "fechaNacimiento" => isset($consultasFacturas[0][4]) ? DateTime::createFromFormat('d/m/Y', $consultasFacturas[0][4])->format('Y-m-d'): null,
                                 "codSexo" => isset($usCampos[0][10]) ? $usCampos[0][10] : null, // campo 11 del us
                                 "codPaisResidencia" => "169", // Colombia
                                 "codMunicipioResidencia" => "76001", // Cali
