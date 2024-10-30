@@ -77,7 +77,9 @@
             margin-top: -10px;
         }
 
-
+        .form-label {
+            font-weight: bold;
+        }
 
         .form-section {
             margin-top: 70px;
@@ -128,6 +130,7 @@
 
 <body>
 
+    <!-- convertidor -->
     <div class="container text-center" style="max-width: 800px; margin: 0 auto;">
         <!-- Logo y mensaje superior -->
         <div class="header-content mb-4">
@@ -138,8 +141,8 @@
             <h1>Convertir RIPS a JSON</h1>
         </div>
 
-        <!-- Formulario de subida de archivos -->
-        <form id="uploadForm" action="procesar_archivos.php" method="POST" enctype="multipart/form-data"
+        <!-- Formulario de subida de archivos procesar_rips-->
+        <form id="uploadForm" action="procesar_rips.php" method="POST" enctype="multipart/form-data"
             class="d-flex flex-column justify-content-center align-items-center">
             <input id="fileInput" type="file" name="archivos_txt[]" accept=".txt" multiple required
                 class="form-control mb-3 custom-file-input" style="width: 400px;">
@@ -147,6 +150,46 @@
             <button type="submit" class="btn btn-primary">Convertir</button>
         </form>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        fileInput.addEventListener('change', function () {
+            fileList.innerHTML = '';
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = files[i].name;
+                    fileList.appendChild(listItem);
+                }
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function (event) {
+            const files = fileInput.files;
+            let allTxt = true;
+
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type !== 'text/plain') {
+                    allTxt = false;
+                    break;
+                }
+            }
+
+            if (!allTxt) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tipo de archivo no permitido',
+                    text: 'Por favor, selecciona solo archivos .txt válidos.'
+                });
+            }
+        });
+    </script>
 
     <div class="container text-center" style="max-width: 1100px; margin: 0 auto;">
         <br>
@@ -214,7 +257,7 @@
                                 <label for="tipoDocumentoIdentificacionUsuario" class="form-label">Tipo de
                                     documento</label>
                                 <select class="form-select" id="tipoDocumentoIdentificacionUsuario"
-                                    name="tipoDocumentoIdentificacionUsuario" required>
+                                    name="tipoDocumentoIdentificacionUsuario">
                                     <option value="" disabled selected>Seleccione un tipo de documento</option>
                                     <option value="CN">Certificado de nacido vivo</option>
                                     <option value="RC">Registro civil</option>
@@ -238,13 +281,13 @@
                                 <label for="numDocumentoIdentificacionUsuario" class="form-label">Numero de Documento
                                     Usuario</label>
                                 <input type="text" class="form-control" id="numDocumentoIdentificacionUsuario"
-                                    name="numDocumentoIdentificacionUsuario" required>
+                                    name="numDocumentoIdentificacionUsuario">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="tipoUsuario" class="form-label">Tipo de Usuario</label>
-                                <select class="form-select" id="tipoUsuario" name="tipoUsuario" required>
+                                <select class="form-select" id="tipoUsuario" name="tipoUsuario">
                                     <option value="" disabled selected>Seleccione un tipo de usuario</option>
                                     <option value="01">Contributivo cotizante</option>
                                     <option value="02">Contributivo beneficiario</option>
@@ -265,11 +308,11 @@
                             <div class="col-md-4">
                                 <label for="fechaNacimientoUsuario" class="form-label">Fecha de Nacimiento</label>
                                 <input type="date" class="form-control" id="fechaNacimientoUsuario"
-                                    name="fechaNacimientoUsuario" required>
+                                    name="fechaNacimientoUsuario">
                             </div>
                             <div class="col-md-4">
                                 <label for="codSexoUsuario" class="form-label">Sexo</label>
-                                <select class="form-select" id="codSexoUsuario" name="codSexoUsuario" required>
+                                <select class="form-select" id="codSexoUsuario" name="codSexoUsuario">
                                     <option value="" disabled selected>Seleccione un tipo de sexo</option>
                                     <option value="H">Hombre</option>
                                     <option value="I">Indeterminado o Intersexual</option>
@@ -280,7 +323,7 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="codPaisResidencia" class="form-label">Pais de Residencia</label>
-                                <select class="form-select" id="codPaisResidencia" name="codPaisResidencia" required>
+                                <select class="form-select" id="codPaisResidencia" name="codPaisResidencia">
                                     <option value="" disabled selected>Seleccione un pais de residencia</option>
                                     <option value="004">AFGANISTÁN</option>
                                     <option value="008">ALBANIA</option>
@@ -1675,7 +1718,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="codPaisOrigen" class="form-label">Pais de Origen</label>
-                                <select class="form-select" id="codPaisOrigen" name="codPaisOrigen" required>
+                                <select class="form-select" id="codPaisOrigen" name="codPaisOrigen">
                                     <option value="" disabled selected>Seleccione pais de origen</option>
                                     <option value="004">AFGANISTÁN</option>
                                     <option value="008">ALBANIA</option>
@@ -1921,7 +1964,7 @@
                             <div class="col-md-4">
                                 <label for="consecutivoUsuarios" class="form-label">Consecutivo</label>
                                 <input type="text" class="form-control" id="consecutivoUsuarios"
-                                    name="consecutivoUsuarios" required>
+                                    name="consecutivoUsuarios">
                             </div>
                         </div>
                         <!--<button type="submit" class="btn btn-success">Enviar Datos</button>-->
@@ -1934,7 +1977,7 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label for="num_DocumentoIdObligado" class="form-label">Número Documento ID
-                                    Obligado</label>
+                                (Nit)</label>
                                 <input type="text" class="form-control" id="num_DocumentoIdObligado"
                                     name="num_DocumentoIdObligado">
                             </div>
@@ -2341,7 +2384,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="numDocumentoIdentificacionConsultas" class="form-label">Numero Documento
+                                <label for="numDocumentoIdentificacionConsultas" class="form-label">Documento
                                     Identificacion</label>
                                 <input type="text" class="form-control" id="numDocumentoIdentificacionConsultas"
                                     name="numDocumentoIdentificacionConsultas">
@@ -3113,7 +3156,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="numDocumentoIdentificacionRecienNacidos" class="form-label">Numero Documento
+                                <label for="numDocumentoIdentificacionRecienNacidos" class="form-label">Documento de
                                     Identificacion</label>
                                 <input type="text" class="form-control" id="numDocumentoIdentificacionRecienNacidos"
                                     name="numDocumentoIdentificacionRecienNacidos">
@@ -3761,7 +3804,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <label for="numDocumentoIdentificacionMedicamentos" class="form-label">Numero Documento
+                                <label for="numDocumentoIdentificacionMedicamentos" class="form-label">Documento de
                                     Identificacion</label>
                                 <input type="text" class="form-control" id="numDocumentoIdentificacionMedicamentos"
                                     name="numDocumentoIdentificacionMedicamentos">
@@ -3820,6 +3863,16 @@
                     aria-labelledby="datosOtrosServicios-tab">
                     <form id="datosOtrosServiciosForm" action="procesar_datos_OtrosServicios.php" method="POST">
                         <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="numAutorizacionOtrosservicios" class="form-label">Numero de Autorizacion</label>
+                                <input type="text" class="form-control" id="numAutorizacionOtrosservicios"
+                                    name="numAutorizacionOtrosservicios">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="idMIPRESOtrosservicios" class="form-label">ID MIPRES</label>
+                                <input type="text" class="form-control" id="idMIPRESOtrosservicios"
+                                    name="idMIPRESOtrosservicios">
+                            </div>
                             <div class="col-md-4">
                                 <label for="fechaSuministroTecnologiaOtrosservicios" class="form-label">Fecha Suministro
                                     Tecnología</label>
@@ -3932,7 +3985,10 @@
 
                 <form id="datosUsuarioForm">
                     <!-- Campos de formulario -->
-                    <button id="enviarDatos" class="btn-success">Enviar Datos</button>
+                    <div id="alerta-validacion" class="alert alert-warning d-none" role="alert">
+                        Por favor ingrese la fecha de inicio de atenci*-* en el formulario de consultas.
+                    </div>
+                    <button id="enviarDatos" class="btn btn-success">Enviar Datos</button>
                 </form>
 
             </div>
@@ -3991,45 +4047,6 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const fileList = document.getElementById('fileList');
-
-        fileInput.addEventListener('change', function () {
-            fileList.innerHTML = '';
-            const files = fileInput.files;
-
-            if (files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = files[i].name;
-                    fileList.appendChild(listItem);
-                }
-            }
-        });
-
-        document.getElementById('uploadForm').addEventListener('submit', function (event) {
-            const files = fileInput.files;
-            let allTxt = true;
-
-            for (let i = 0; i < files.length; i++) {
-                if (files[i].type !== 'text/plain') {
-                    allTxt = false;
-                    break;
-                }
-            }
-
-            if (!allTxt) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Tipo de archivo no permitido',
-                    text: 'Por favor, selecciona solo archivos .txt válidos.'
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

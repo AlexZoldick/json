@@ -1,9 +1,7 @@
 <?php
-// Verificar si hay datos POST
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Inicializar arrays
     $procedimientos = [];
     $urgencias = [];
     $hospitalizacion = [];
@@ -11,31 +9,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $medicamentos = [];
     $otrosServicios = [];
 
-    if (!empty($_POST['fechaSuministroTecnologiaOtrosservicios'])) {
+    if (!empty($_POST['numAutorizacionOtrosservicios'])) {
         $otrosServicios = [
             [
-                'cantidadOS' => isset($_POST['cantidadOSOtrosservicios']) ? $_POST['cantidadOSOtrosservicios'] : null,
                 'codPrestador' => isset($_POST['codPrestador']) ? $_POST['codPrestador'] : null,
-                'codTecnologiaSalud' => isset($_POST['codTecnologiaSaludOtrosservicios']) ? $_POST['codTecnologiaSaludOtrosservicios'] : null,
-                'conceptoRecaudo' => isset($_POST['conceptoRecaudoOtrosservicios']) ? $_POST['conceptoRecaudoOtrosservicios'] : null,
-                'consecutivo' => isset($_POST['consecutivoOtrosServicios']) ? $_POST['consecutivoOtrosServicios'] : null,
+                'numAutorizacion' => isset($_POST['numAutorizacionOtrosservicios']) ? $_POST['numAutorizacionOtrosservicios'] : null,
+                'idMIPRES' => isset($_POST['idMIPRESOtrosservicios']) ? $_POST['idMIPRESOtrosservicios'] : null,
                 'fechaSuministroTecnologia' => isset($_POST['fechaSuministroTecnologiaOtrosservicios']) ? $_POST['fechaSuministroTecnologiaOtrosservicios'] : null,
-                'nomTecnologiaSalud' => isset($_POST['nomTecnologiaSaludOtrosservicios']) ? $_POST['nomTecnologiaSaludOtrosservicios'] : null,
-                'numDocumentoIdentificacion' => isset($_POST['numDocumentoIdentificacionOtrosServicios']) ? $_POST['numDocumentoIdentificacionOtrosServicios'] : null,
-                'numFEVPagoModerador' => isset($_POST['numFEVPagoModeradorOtrosServicios']) ? $_POST['numFEVPagoModeradorOtrosServicios'] : null,
-                'tipoDocumentoIdentificacion' => isset($_POST['tipoDocumentoIdentificacionOtrosServicios']) ? $_POST['tipoDocumentoIdentificacionOtrosServicios'] : null,
                 'tipoOS' => isset($_POST['tipoOS']) ? $_POST['tipoOS'] : null,
-                'valorPagoModerador' => isset($_POST['valorPagoModeradorOtrosservicios']) ? $_POST['valorPagoModeradorOtrosservicios'] : null,
+                'codTecnologiaSalud' => isset($_POST['codTecnologiaSaludOtrosservicios']) ? $_POST['codTecnologiaSaludOtrosservicios'] : null,
+                'nomTecnologiaSalud' => isset($_POST['nomTecnologiaSaludOtrosservicios']) ? $_POST['nomTecnologiaSaludOtrosservicios'] : null,
+                'cantidadOS' => isset($_POST['cantidadOSOtrosservicios']) ? $_POST['cantidadOSOtrosservicios'] : null,
+                'tipoDocumentoIdentificacion' => isset($_POST['tipoDocumentoIdentificacionOtrosServicios']) ? $_POST['tipoDocumentoIdentificacionOtrosServicios'] : null,
+                'numDocumentoIdentificacion' => isset($_POST['numDocumentoIdentificacionOtrosServicios']) ? $_POST['numDocumentoIdentificacionOtrosServicios'] : null,
+                'vrUnitOS' => isset($_POST['vrUnitOSOtrosservicios']) ? $_POST['vrUnitOSOtrosservicios'] : null,
                 'vrServicio' => isset($_POST['vrServicioOtrosservicios']) ? $_POST['vrServicioOtrosservicios'] : null,
-                'vrUnitOS' => isset($_POST['vrUnitOSOtrosservicios']) ? $_POST['vrUnitOSOtrosservicios'] : null
+                'conceptoRecaudo' => isset($_POST['conceptoRecaudoOtrosservicios']) ? $_POST['conceptoRecaudoOtrosservicios'] : null,
+                'valorPagoModerador' => isset($_POST['valorPagoModeradorOtrosservicios']) ? $_POST['valorPagoModeradorOtrosservicios'] : null,
+                'numFEVPagoModerador' => isset($_POST['numFEVPagoModeradorOtrosServicios']) ? $_POST['numFEVPagoModeradorOtrosServicios'] : null,
+                'consecutivo' => isset($_POST['consecutivoOtrosServicios']) ? $_POST['consecutivoOtrosServicios'] : null
             ]
         ];
     }
 
-    if (!empty($_POST['fechaDispensAdmonmedicamentos'])) {
+    if (!empty($_POST['numAutorizacionmedicamentos'])) {
         $medicamentos = [
             [
-                'codPrestador' => isset($_POST['codPrestadormedicamentos']) ? $_POST['codPrestadormedicamentos'] : null,
+                'codPrestador' => isset($_POST['codPrestador']) ? $_POST['codPrestador'] : null,
                 'numAutorizacion' => isset($_POST['numAutorizacionmedicamentos']) ? $_POST['numAutorizacionmedicamentos'] : null,
                 'idMIPRES' => isset($_POST['idMIPRESmedicamentos']) ? $_POST['idMIPRESmedicamentos'] : null,
                 'fechaDispensAdmon' => isset($_POST['fechaDispensAdmonmedicamentos']) ? $_POST['fechaDispensAdmonmedicamentos'] : null,
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['fechaNacimientoRecienNacidos'])) {
         $recienNacidos = [
             [
-                'codPrestador' => isset($_POST['codPrestadorRecienNacidos']) ? $_POST['codPrestadorRecienNacidos'] : null,
+                'codPrestador' => isset($_POST['codPrestador']) ? $_POST['codPrestador'] : null,
                 'tipoDocumentoIdentificacion' => isset($_POST['tipoDocumentoIdentificacionRecienNacidos']) ? $_POST['tipoDocumentoIdentificacionRecienNacidos'] : null,
                 'numDocumentoIdentificacion' => isset($_POST['numDocumentoIdentificacionRecienNacidos']) ? $_POST['numDocumentoIdentificacionRecienNacidos'] : null,
                 'fechaNacimiento' => isset($_POST['fechaNacimientoRecienNacidos']) ? $_POST['fechaNacimientoRecienNacidos'] : null,
@@ -114,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'codDiagnosticoPrincipalE' => isset($_POST['codDiagnosticoPrincipalEUrgencias']) ? $_POST['codDiagnosticoPrincipalEUrgencias'] : null,
                 'codDiagnosticoRelacionadoE1' => isset($_POST['codDiagnosticoRelacionadoE1Urgencias']) ? $_POST['codDiagnosticoRelacionadoE1Urgencias'] : null,
                 'codDiagnosticoRelacionadoE2' => isset($_POST['codDiagnosticoRelacionadoE2Urgencias']) ? $_POST['codDiagnosticoRelacionadoE2Urgencias'] : null,
+                'codDiagnosticoRelacionadoE3' => isset($_POST['codDiagnosticoRelacionadoE3Urgencias']) ? $_POST['codDiagnosticoRelacionadoE3Urgencias'] : null,
                 'condicionDestinoUsuarioEgreso' => isset($_POST['condicionDestinoUsuarioEgresoUrgencias']) ? $_POST['condicionDestinoUsuarioEgresoUrgencias'] : null,
                 'codDiagnosticoCausaMuerte' => isset($_POST['codDiagnosticoCausaMuerteUrgencias']) ? $_POST['codDiagnosticoCausaMuerteUrgencias'] : null,
                 'fechaEgreso' => isset($_POST['fechaEgresoUrgencias']) ? $_POST['fechaEgresoUrgencias'] : null,
@@ -144,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'conceptoRecaudo' => isset($_POST['conceptoRecaudoProcedimientos']) ? $_POST['conceptoRecaudoProcedimientos'] : null,
                 'valorPagoModerador' => isset($_POST['valorPagoModerador']) ? $_POST['valorPagoModerador'] : null,
                 'numFEVPagoModerador' => isset($_POST['numFEVPagoModeradorProcedimientos']) ? $_POST['numFEVPagoModeradorProcedimientos'] : null,
-                'consecutivo' => isset($_POST['consecutivoProcedimientos']) ? $_POST['consecutivoProcedimientos'] : null,
+                'consecutivo' => isset($_POST['consecutivoProcedimientos']) ? $_POST['consecutivoProcedimientos'] : null
             ]
         ];
     }
@@ -188,37 +189,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'numDocumentoIdentificacion' => isset($_POST['numDocumentoIdentificacionUsuario']) ? $_POST['numDocumentoIdentificacionUsuario'] : null,
                 'tipoUsuario' => isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : null,
                 'fechaNacimiento' => isset($_POST['fechaNacimientoUsuario']) ? $_POST['fechaNacimientoUsuario'] : null,
-                'codSexo' => isset($_POST['tipoSexo']) ? $_POST['tipoSexo'] : null,
+                'codSexo' => isset($_POST['codSexoUsuario']) ? $_POST['codSexoUsuario'] : null,
                 'codPaisResidencia' => isset($_POST['codPaisResidencia']) ? $_POST['codPaisResidencia'] : null,
                 'codMunicipioResidencia' => isset($_POST['codMunicipioResidenciaUsuarios']) ? $_POST['codMunicipioResidenciaUsuarios'] : null,
                 'codZonaTerritorialResidencia' => isset($_POST['codZonaTerritorialResidencia']) ? $_POST['codZonaTerritorialResidencia'] : null,
                 'incapacidad' => isset($_POST['incapacidad']) ? $_POST['incapacidad'] : null,
                 'codPaisOrigen' => isset($_POST['codPaisOrigen']) ? $_POST['codPaisOrigen'] : null,
-                'consecutivo' => isset($_POST['consecutivoUsuarios']) ? (int)$_POST['consecutivoUsuarios'] : null,
+                'consecutivo' => isset($_POST['consecutivoUsuarios']) ? $_POST['consecutivoUsuarios'] : null,
                 'servicios' => array_filter([
-                    'consultas' => array_filter($consultas, function ($consulta) {
+                    'consultas' => isset($consultas) ? array_filter($consultas, function ($consulta) {
                         return !empty($consulta);
-                    }),
-                    'procedimientos' => array_filter($procedimientos, function ($procedimiento) {
+                    }) : [],
+                    'procedimientos' => isset($procedimientos) ? array_filter($procedimientos, function ($procedimiento) {
                         return !empty($procedimiento);
-                    }),
-                    'urgencias' => array_filter($urgencias, function ($urgencia) {
+                    }) : [],
+                    'urgencias' => isset($urgencias) ? array_filter($urgencias, function ($urgencia) {
                         return !empty($urgencia);
-                    }),
-                    'hospitalizacion' => array_filter($hospitalizacion, function ($hospital) {
+                    }) : [],
+                    'hospitalizacion' => isset($hospitalizacion) ? array_filter($hospitalizacion, function ($hospital) {
                         return !empty($hospital);
-                    }),
-                    'recienNacidos' => array_filter($recienNacidos, function ($recienNacido) {
+                    }) : [],
+                    'recienNacidos' => isset($recienNacidos) ? array_filter($recienNacidos, function ($recienNacido) {
                         return !empty($recienNacido);
-                    }),
-                    'medicamentos' => array_filter($medicamentos, function ($medicamento) {
+                    }) : [],
+                    'medicamentos' => isset($medicamentos) ? array_filter($medicamentos, function ($medicamento) {
                         return !empty($medicamento);
-                    }),
-                    'otrosServicios' => array_filter($otrosServicios, function ($servicio) {
+                    }) : [],
+                    'otrosServicios' => isset($otrosServicios) ? array_filter($otrosServicios, function ($servicio) {
                         return !empty($servicio);
-                    })
+                    }) : []
                 ], function ($value) {
-                    return !empty($value); // Elimina los servicios vacíos
+                    return !empty($value); // Elimina servicios vacíos
                 })
             ]
         ]
